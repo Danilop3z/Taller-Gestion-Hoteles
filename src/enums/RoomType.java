@@ -1,5 +1,5 @@
 package enums;
 
-public enum TypeOfRoom {
+public enum RoomType {
     SIMPLE, DOUBLE, SUITE
 }

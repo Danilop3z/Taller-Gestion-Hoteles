@@ -66,4 +66,13 @@ public class EmployeePersistence extends FilePlain implements IActionsFile {
             i.printStackTrace();
         }
     }
+
+    public List<Employee> getListEmployees() {
+        return this.listEmployees;
+    }
+
+    public void setListEmployees(List<Employee> listEmployees) {
+        this.listEmployees = listEmployees;
+    }
+
 }

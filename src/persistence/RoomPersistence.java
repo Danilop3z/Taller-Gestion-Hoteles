@@ -2,36 +2,41 @@ package persistence;
 
 import constants.CommonConstants;
 import enums.ETypeFile;
+import enums.RoomStatus;
+import enums.RoomType;
 import interfaces.IActionsFile;
 import model.HotelRoom;
-import model.RoomReservation;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
-public class RoomReservationPersistence extends FilePlain implements IActionsFile {
-    private List<RoomReservation> listRoomReservations;
+public class RoomPersistence extends FilePlain implements IActionsFile {
+    private List<HotelRoom> listRooms;
 
-    public RoomReservationPersistence(){
-        this.listRoomReservations = new ArrayList<RoomReservation>();
-        }
+    public RoomPersistence() {
+        this.listRooms = new ArrayList<HotelRoom>();
+    }
 
-        private RoomReservation findReservationByCode(int code) {
-            for (RoomReservation rs : this.listRoomReservations) {
-                if (rs.getReservationCode() == code) {
-                    return rs;
-                }
+    private HotelRoom findRoomById(int id) {
+        for(HotelRoom hotelRoom: this.listRooms) {
+            if(hotelRoom.getRoomNumber() == id) {
+                return hotelRoom;
             }
-            return null;
         }
+        return null;
+    }
 
-        private boolean addRoomReservation(RoomReservation rs) {
-        if (Objects.isNull(this.findReservationByCode(rs.getReservationCode()))){
-            this.listRoomReservations.add(rs);
+    public Boolean addHotelRoom(HotelRoom hotelRoom) {
+        if(Objects.isNull(this.findRoomById(hotelRoom.getRoomNumber()))) {
+            this.listRooms.add(hotelRoom);
             return true;
         }
         return false;
-        }
+    }
+
 
     @Override
     public void loadFile(ETypeFile eTypeFile) {
@@ -39,6 +44,11 @@ public class RoomReservationPersistence extends FilePlain implements IActionsFil
     }
 
     private void loadFileJSON() {
+
+        //Limpiar Lista antes
+
+        this.listRooms.clear();
+
         List<String> contentInLine = this.reader(
                         config.getPathFiles().concat(config.getNameFileRoomJson()))
                 .stream().filter(line -> !line.equals("[") && !line.equals("]") &&
@@ -49,13 +59,13 @@ public class RoomReservationPersistence extends FilePlain implements IActionsFil
             line = line.replace("{", "").replace("},", "").replace("}", "");
             StringTokenizer tokens = new StringTokenizer(line, ",");
             while(tokens.hasMoreElements()){
-                int reservationCode = Integer.parseInt(this.escapeValue(tokens.nextToken().split(":")[1]));
-                String entryDate = this.escapeValue(tokens.nextToken().split(":")[1]);
-                String departureDate = this.escapeValue(tokens.nextToken().split(":")[1]);
-                String customerName = this.escapeValue(tokens.nextToken().split(":")[1]);
                 int roomNumber = Integer.parseInt(this.escapeValue(tokens.nextToken().split(":")[1]));
-
-                this.listRoomReservations.add(new RoomReservation(reservationCode, entryDate, departureDate, customerName, roomNumber));
+                String typeRoomStr = this.escapeValue(tokens.nextToken().split(":")[1]);
+                String stateStr = this.escapeValue(tokens.nextToken().split(":")[1]);
+                String employeeName = this.escapeValue(tokens.nextToken().split(":")[1]);
+                RoomType typeRoom = RoomType.valueOf(typeRoomStr);
+                RoomStatus state = RoomStatus.valueOf(stateStr);
+                this.listRooms.add(new HotelRoom(roomNumber, typeRoom, state, employeeName));
             }
         }
     }
@@ -64,28 +74,25 @@ public class RoomReservationPersistence extends FilePlain implements IActionsFil
         return value.replace("\"", "");
     }
 
-
     @Override
     public void dumpFile(ETypeFile eTypeFile) {
         dumpFileJSON();
     }
-
     private void dumpFileJSON() {
         String rutaArchivo = config.getPathFiles()
-                .concat(config.getNameFileReservationJson());
+                .concat(config.getNameFileRoomJson());
         StringBuilder json = null;
         List<String> content = new ArrayList<String>();
         content.add(CommonConstants.OPENING_BRACKET);
         int contador = 0;
-        int total = listRoomReservations.size();
-        for (RoomReservation rs : this.listRoomReservations) {
+        int total = listRooms.size();
+        for (HotelRoom h : this.listRooms) {
             json = new StringBuilder();
             json.append("{");
-            json.append("  \"reservationCode\":\"").append(escape(String.valueOf(rs.getReservationCode()))).append("\",");
-            json.append("  \"entryDate\":\"").append(escape(rs.getEntryDate())).append("\",");
-            json.append("  \"departureDate\":\"").append(escape(rs.getDepartureDate())).append("\",");
-            json.append("  \"customerName\":\"").append(escape(rs.getCustomerName())).append("\",");
-            json.append("  \"roomNumber\":\"").append(escape(String.valueOf(rs.getRoomNumber()))).append("\",");
+            json.append("  \"roomNumber\":\"").append(escape(String.valueOf(h.getRoomNumber()))).append("\",");
+            json.append("  \"typeOfRoom\":\"").append(escape(h.getTypeRoom().name())).append("\","); //name() para obtener representacion textual
+            json.append("  \"state\":\"").append(escape(h.getState().name())).append("\",");
+            json.append("  \"employeeName\":\"").append(escape(h.getEmployeeName())).append("\"");
             json.append("}");
 
             contador++;
@@ -102,5 +109,13 @@ public class RoomReservationPersistence extends FilePlain implements IActionsFil
     private String escape(String value) {
         if (value == null) return "";
         return value.replace("\\", "\\\\").replace("\"", "\\\"");
+    }
+
+    public List<HotelRoom> getListRooms() {
+        return listRooms;
+    }
+
+    public void setListRooms(List<HotelRoom> listRooms) {
+        this.listRooms = listRooms;
     }
 }

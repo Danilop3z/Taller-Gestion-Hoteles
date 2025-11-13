@@ -19,7 +19,7 @@ public class Config {
                     new FileInputStream("resources/config/appconfig.properties")){
             properties.load(entrada);
             this.pathFiles = properties.getProperty("path.files");
-            this.nameFileSer = nameFileSer;
+            this.nameFileSer = properties.getProperty("file.name.ser");
             this.nameFileRoomJson = properties.getProperty("file.room.json");
             this.nameFileReservationJson = properties.getProperty("file.reservation.json");
         }catch (IOException ex) {

@@ -1,15 +1,18 @@
 package model;
 
+import enums.RoomStatus;
+import enums.RoomType;
+
 public class HotelRoom {
     private int roomNumber;
-    private String typeOfRoom;
-    private String state;
+    private RoomType typeRoom;
+    private RoomStatus state;
     private String employeeName;
 
-    public HotelRoom(int roomNumber, String typeOfRoom, String estado, String employeeName) {
+    public HotelRoom(int roomNumber, RoomType typeRoom, RoomStatus state, String employeeName) {
         this.roomNumber = roomNumber;
-        this.typeOfRoom = typeOfRoom;
-        this.state = estado;
+        this.typeRoom = typeRoom;
+        this.state = state;
         this.employeeName = employeeName;
     }
 
@@ -21,20 +24,20 @@ public class HotelRoom {
         this.roomNumber = roomNumber;
     }
 
-    public String getTypeOfRoom() {
-        return typeOfRoom;
+    public RoomType getTypeRoom() {
+        return typeRoom;
     }
 
-    public void setTypeOfRoom(String typeOfRoom) {
-        this.typeOfRoom = typeOfRoom;
+    public void setTypeRoom(RoomType typeRoom) {
+        this.typeRoom = typeRoom;
     }
 
-    public String getEstado() {
-        return estado;
+    public RoomStatus getState() {
+        return state;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setState(RoomStatus state) {
+        this.state = state;
     }
 
     public String getEmployeeName() {
@@ -49,8 +52,8 @@ public class HotelRoom {
     public String toString() {
         return "HotelRoom{" +
                 "roomNumber=" + roomNumber +
-                ", typeOfRoom='" + typeOfRoom + '\'' +
-                ", estado='" + estado + '\'' +
+                ", typeOfRoom='" + typeRoom + '\'' +
+                ", estado='" + state + '\'' +
                 ", employeeName='" + employeeName + '\'' +
                 '}';
     }

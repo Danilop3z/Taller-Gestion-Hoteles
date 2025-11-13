@@ -1,5 +1,5 @@
 package enums;
 
-public enum StateRoom {
+public enum RoomStatus {
     AVAILABLE, BUSY
 }

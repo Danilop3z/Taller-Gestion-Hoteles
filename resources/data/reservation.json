@@ -1,0 +1,5 @@
+[
+{  "reservationCode":"100",  "entryDate":"2025-10-10", "departureDate":"2025-10-20",  "customerName":"Cesar",  "roomNumber":"3"},
+{  "reservationCode":"111",  "entryDate":"2025-10-10", "departureDate":"",  "customerName":"Sharon",  "roomNumber":"1"},
+{  "reservationCode":"110",  "entryDate":"2025-10-15", "departureDate":"",  "customerName":"Farid",  "roomNumber":"3"}
+]

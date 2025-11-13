@@ -1,0 +1,5 @@
+[
+{  "roomNumber":"1",  "typeOfRoom":"SIMPLE",  "state":"BUSY",  "employeeName":"Daniel"},
+{  "roomNumber":"2",  "typeOfRoom":"DOUBLE",  "state":"BUSY",  "employeeName":"Daniel"},
+{  "roomNumber":"3",  "typeOfRoom":"SUITE",  "state":"BUSY",  "employeeName":"Daniel"}
+]
