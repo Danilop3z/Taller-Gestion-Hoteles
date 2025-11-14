@@ -17,7 +17,7 @@ public class AuthController {
     }
 
     public boolean login(String username, String password) {
-        // Verificar la lista cargara
+        // Verificar la lista
         this.employeePersistence.loadFile(ETypeFile.FILE_PLAIN);
 
         List<Employee> employees = this.employeePersistence.getListEmployees();

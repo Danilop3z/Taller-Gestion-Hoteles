@@ -54,4 +54,8 @@ public class RoomController {
         }
         return null;
     }
+    public RoomPersistence getPersistence() {
+        return persistence;
+    }
+
 }

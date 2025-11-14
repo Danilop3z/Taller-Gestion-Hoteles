@@ -1,61 +1,33 @@
-
 import controller.AuthController;
 import controller.ReservationController;
 import controller.RoomController;
 import persistence.EmployeePersistence;
 import persistence.ReservationPersistence;
 import persistence.RoomPersistence;
-import view.AuthView;
-import view.MenuPrincipal;
+import view.*;
 
-import java.util.Scanner;
+import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        // Crear persistencias y controllers (únicas instancias)
+        EmployeePersistence empP = new EmployeePersistence();
+        AuthController authController = new AuthController(empP);
 
-        EmployeePersistence employeePersistence = new EmployeePersistence();
-        RoomPersistence roomPersistence = new RoomPersistence();
-        ReservationPersistence reservationPersistence = new ReservationPersistence();
+        RoomPersistence roomP = new RoomPersistence();
+        RoomController roomController = new RoomController(roomP);
 
-        AuthController authController = new AuthController(employeePersistence);
-        RoomController roomController = new RoomController(roomPersistence);
-        ReservationController reservationController = new ReservationController(reservationPersistence, roomController);
+        ReservationPersistence resP = new ReservationPersistence();
+        ReservationController reservationController = new ReservationController(resP, roomController);
 
-        AuthView authView = new AuthView(authController, scanner);
-        MenuPrincipal mainMenu = new MenuPrincipal(authController, roomController, reservationController, scanner);
+        // Forzar look and feel del sistema (opcional)
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ignored) {}
 
-        boolean exit = false;
-        while (!exit) {
-            System.out.println("\n===== SISTEMA DE GESTIÓN HOTELERA =====");
-            System.out.println("1. Iniciar sesión");
-            System.out.println("2. Registrar nuevo empleado");
-            System.out.println("0. Salir");
-            System.out.print("Opción: ");
-
-            int option;
-            try {
-                option = Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
-                option = -1;
-            }
-
-            switch (option) {
-                case 1 -> {
-                    if (authView.login()) {
-                        mainMenu.show();
-                    }
-                }
-                case 2 -> authView.register();
-                case 0 -> {
-                    System.out.println("Saliendo del sistema...");
-                    exit = true;
-                }
-                default -> System.out.println("Opción inválida, intente nuevamente.");
-            }
-        }
-
-        scanner.close();
+        // Lanzar login en EDT
+        SwingUtilities.invokeLater(() -> {
+            new view.LoginView(authController, roomController, reservationController);
+        });
     }
 }
-

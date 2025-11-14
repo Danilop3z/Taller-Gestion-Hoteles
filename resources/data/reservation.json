@@ -1,5 +1,7 @@
 [
+{  "reservationCode":"200",  "entryDate":"2025-11-09", "departureDate":"",  "customerName":"Juan",  "roomNumber":"3"},
+{  "reservationCode":"111",  "entryDate":"2025-10-10", "departureDate":"2025-10-18",  "customerName":"Sharon",  "roomNumber":"1"},
 {  "reservationCode":"100",  "entryDate":"2025-10-10", "departureDate":"2025-10-20",  "customerName":"Cesar",  "roomNumber":"3"},
-{  "reservationCode":"111",  "entryDate":"2025-10-10", "departureDate":"",  "customerName":"Sharon",  "roomNumber":"1"},
-{  "reservationCode":"110",  "entryDate":"2025-10-15", "departureDate":"",  "customerName":"Farid",  "roomNumber":"3"}
+{  "reservationCode":"110",  "entryDate":"2025-10-15", "departureDate":"2025-10-20",  "customerName":"Farid",  "roomNumber":"3"},
+{  "reservationCode":"201",  "entryDate":"2025-10-20", "departureDate":"2025-10-24",  "customerName":"Carlos",  "roomNumber":"5"}
 ]

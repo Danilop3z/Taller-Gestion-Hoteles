@@ -1,5 +1,5 @@
 [
-{  "roomNumber":"1",  "typeOfRoom":"SIMPLE",  "state":"BUSY",  "employeeName":"Daniel"},
-{  "roomNumber":"2",  "typeOfRoom":"DOUBLE",  "state":"BUSY",  "employeeName":"Daniel"},
-{  "roomNumber":"3",  "typeOfRoom":"SUITE",  "state":"BUSY",  "employeeName":"Daniel"}
+{  "roomNumber":"3",  "typeOfRoom":"SUITE",  "state":"AVAILABLE",  "employeeName":"Daniel"},
+{  "roomNumber":"5",  "typeOfRoom":"DOUBLE",  "state":"AVAILABLE",  "employeeName":"Daniel"},
+{  "roomNumber":"6",  "typeOfRoom":"SUITE",  "state":"AVAILABLE",  "employeeName":"Daniel"}
 ]
